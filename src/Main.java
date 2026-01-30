@@ -25,12 +25,16 @@ public class Main
         //Setting up memnu
         System.out.println("************************");
         System.out.println("Welcome to Java Hangman");
-        System.out.println("************************");
+        System.out.print("************************");
 
 
         //main game loop
         while(wrongCount < 6)
         {
+            //displaying hangman 'art'
+            System.out.print(getHangmanArt(wrongCount));
+
+
             System.out.print("Word: ");
             for(char c : wordState )
             {
@@ -55,12 +59,29 @@ public class Main
                         wordState.set(i, guess);
                     }
                 }
+
+                if(!wordState.contains('_'))
+                {
+                    System.out.print(getHangmanArt(wrongCount));
+                    System.out.println("YOU WIN!!!");
+                    System.out.println("The word was: " + word);
+                    break;
+                }
             }
             else
             {
+                wrongCount++;
                 System.out.println("Wrong guess");
             }
         }
+
+        if(wrongCount >= 6)
+        {
+            System.out.println(getHangmanArt(6));
+            System.out.println("GAME OVER");
+            System.out.println("The word was: " + word);
+        }
+
 
         scanner.close();
 
