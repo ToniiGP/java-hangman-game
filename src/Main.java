@@ -1,12 +1,41 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main
 {
     public static void main(String[] args)
     {
+        //file path for wordbank
+        String filePath = "src/words.txt";
+        ArrayList<String> words  = new ArrayList<>();
+
+        try(BufferedReader reader = new BufferedReader(new FileReader(filePath)))
+        {
+            String line;
+            while((line = reader.readLine()) != null)
+            {
+                words.add(line.trim());
+            }
+
+        }
+        catch(FileNotFoundException e)
+        {
+            System.out.println(filePath + " File not found");
+        }
+        catch(IOException e)
+        {
+            System.out.println("Something went wrong");
+        }
+
+        Random random = new Random();
+        String word = words.get(random.nextInt(words.size()));
+
         //initial word to test logic
-        String word = "pizza";
         Scanner scanner = new Scanner(System.in);
 
         //array of characters to store "_" to display for the user
@@ -21,12 +50,10 @@ public class Main
             wordState.add('_');
         }
 
-
         //Setting up memnu
         System.out.println("************************");
         System.out.println("Welcome to Java Hangman");
         System.out.print("************************");
-
 
         //main game loop
         while(wrongCount < 6)
@@ -82,9 +109,7 @@ public class Main
             System.out.println("The word was: " + word);
         }
 
-
         scanner.close();
-
     }
 
 
